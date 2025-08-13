@@ -31,3 +31,11 @@ video,canvas{width:100%;aspect-ratio:16/9;background:#000;border-radius:8px}
 .muted{color:var(--muted)}
 
 .footer{border-top:1px solid var(--border);padding:18px;text-align:center;color:var(--muted);margin-top:40px}
+html { color-scheme: light; }
+:root {
+  --bg: #ffffff;
+  --panel: #f8fafc;
+  --text: #0f172a;
+  --muted: #475569;
+}
+body { background: var(--bg); color: var(--text); }
