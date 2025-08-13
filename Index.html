@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SpotAlert — Stay aware. Report fast.</title>
+  <meta name="description" content="AI-powered real-time surveillance & security alerts — SpotAlert." />
+  <link rel="preload" href="/assets/logo.svg" as="image" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <img src="/assets/logo.svg" alt="SpotAlert logo" class="logo" />
+      <nav class="links">
+        <a href="#features">Features</a>
+        <a href="#camera">Camera</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Stay aware. <span class="accent">Report fast.</span></h1>
+        <p>AI‑powered real‑time surveillance & security alerts — anytime, anywhere.</p>
+        <div class="cta-row">
+          <a href="#camera" class="btn btn-primary">Open Camera Demo</a>
+          <a href="#features" class="btn">See Features</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <h2>Our Features (Ready Now)</h2>
+      <ul class="bullets">
+        <li>AI‑based real‑time incident detection (browser demo)</li>
+        <li>CCTV & camera system integration (edge‑ready scaffolding)</li>
+        <li>Instant email alerts (integration‑ready)</li>
+        <li>Secure cloud storage for evidence (add your provider later)</li>
+        <li>Analytics dashboard for threat patterns (coming as module)</li>
+      </ul>
+
+      <div class="pill note">
+        <strong>Shira Assistant:</strong> Shira is available to answer questions via chat or voice on this site.
+      </div>
+    </section>
+
+    <section id="camera" class="section">
+      <h2>Live Camera (Demo)</h2>
+      <p>This MVP runs 100% in your browser. Nothing is uploaded — it’s a front‑end demo you can deploy today.</p>
+      <div class="camera">
+        <video id="video" playsinline autoplay muted></video>
+        <canvas id="frame" class="hidden"></canvas>
+      </div>
+      <div class="cta-row">
+        <button id="start" class="btn btn-primary">Start Camera</button>
+        <button id="capture" class="btn">Capture Frame</button>
+        <button id="stop" class="btn btn-danger">Stop Camera</button>
+      </div>
+      <p id="camStatus" class="muted">Camera idle.</p>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About SpotAlert</h2>
+      <p>
+        SpotAlert is your trusted AI security partner, designed to detect, alert, and
+        respond to threats faster than any human system. Whether for home, business, or
+        public safety, SpotAlert ensures 24/7 monitoring with advanced AI capabilities.
+      </p>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact Us</h2>
+      <p class="muted">Email support only — Shira can triage and reply.</p>
+      <p><a class="btn" href="mailto:support@spotalert.live">support@spotalert.live</a></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © <span id="yr"></span> SpotAlert. All rights reserved.
+  </footer>
+
+  <script src="/app.js"></script>
+  <script src="/shira.js"></script>
+</body>
+</html>
