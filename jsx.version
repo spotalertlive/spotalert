@@ -1,0 +1,12 @@
+function PlanPrice({ usd, plan }) {
+  return (
+    <div className="price" data-usd={usd} data-plan={plan}>
+      <div className="price-line">
+        <span className="usd">${usd}</span>
+        <span className="per">/mo</span>
+        <span className="local est hidden" />
+      </div>
+      <div className="note billing-note hidden">Billing processed in USD</div>
+    </div>
+  );
+}
