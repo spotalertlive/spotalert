@@ -1,9 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="160" height="40" viewBox="0 0 160 40" role="img" aria-label="SpotAlert">
-  <g>
-    <path d="M18 2 L34 30 H2 Z" fill="#FFC400" stroke="#0A66C2" stroke-width="3"/>
-    <rect x="16.6" y="12" width="2.8" height="10" rx="1.4" fill="#0A66C2"/>
-    <circle cx="18" cy="25" r="2.2" fill="#0A66C2"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="210" height="36" viewBox="0 0 210 36" role="img" aria-labelledby="title">
+  <title id="title">SpotAlert</title>
+  <defs>
+    <style><![CDATA[
+      .blue { fill: #1677ff; }      /* Spot */
+      .amber { fill: #f59e0b; }     /* Alert */
+      .dark { fill: #0f172a; }      /* exclamation & stroke */
+      text { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,"Noto Sans","Helvetica Neue",sans-serif;
+             font-weight: 700; letter-spacing: .2px; }
+    ]]></style>
+  </defs>
+
+  <!-- Warning triangle icon -->
+  <g transform="translate(4,4)">
+    <polygon points="18,0 34,28 2,28" fill="#facc15" stroke="#0f172a" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="17" y="10" width="2.4" height="9.5" rx="1.2" class="dark"/>
+    <circle cx="18" cy="23.5" r="2" class="dark"/>
   </g>
-  <text x="42" y="26" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#0A66C2">Spot</text>
-  <text x="96" y="26" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#FFC400">Alert</text>
+
+  <!-- Wordmark -->
+  <text x="56" y="25" font-size="18" class="blue">Spot</text>
+  <text x="104" y="25" font-size="18" class="amber">Alert</text>
 </svg>
