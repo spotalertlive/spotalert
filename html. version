@@ -1,0 +1,17 @@
+<div class="price" data-usd="19" data-plan="Pro">
+  <div class="price-line">
+    <span class="usd">$19</span>
+    <span class="per">/mo</span>
+    <span class="local est hidden"></span>
+  </div>
+  <div class="note billing-note hidden">Billing processed in USD</div>
+</div>
+
+<div class="price" data-usd="49" data-plan="Ultra">
+  <div class="price-line">
+    <span class="usd">$49</span>
+    <span class="per">/mo</span>
+    <span class="local est hidden"></span>
+  </div>
+  <div class="note billing-note hidden">Billing processed in USD</div>
+</div>
