@@ -1,0 +1,4 @@
+.price-line { display:flex; gap:.4rem; align-items:baseline; }
+.local.est { font-size:.9rem; opacity:.8; }
+.hidden { display:none; }
+.note { font-size:.8rem; color:#6b7280; margin-top:.25rem; }
