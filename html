@@ -1,1 +1,52 @@
 <img src="/assets.logo.svg" alt="SpotAlert" height="28" />
+<script>
+(() => {
+  // --- Map common countries -> currency (fallback USD) ---
+  const CCY_BY_REGION = {
+    US:'USD', CA:'CAD', GB:'GBP', IE:'EUR', EU:'EUR', DE:'EUR', FR:'EUR', ES:'EUR',
+    IT:'EUR', NL:'EUR', BE:'EUR', AT:'EUR', PT:'EUR', FI:'EUR', GR:'EUR',
+    AU:'AUD', NZ:'NZD', SG:'SGD', JP:'JPY', HK:'HKD', AE:'AED',
+    SA:'SAR', ZA:'ZAR', KE:'KES', NG:'NGN', EG:'EGP', MA:'MAD', PK:'PKR', BD:'BDT',
+    IN:'INR', MX:'MXN', BR:'BRL'
+  };
+
+  // --- Simple, safe FX table (1 USD -> local) — adjust anytime ---
+  const USD_TO = {
+    USD:1, EUR:0.92, GBP:0.78, CAD:1.35, AUD:1.50, SGD:1.35, JPY:156,
+    HKD:7.82, AED:3.67, SAR:3.75, ZAR:17.9, KES:128, NGN:1575, EGP:48,
+    MAD:9.8, PKR:279, BDT:118, INR:83.5, MXN:17.2, BRL:5.4, NZD:1.62
+  };
+
+  // --- Which regions are fully verified for local billing? (we’ll expand later) ---
+  const LOCAL_BILLING_READY = new Set(['US','CA','GB','IE','EU','DE','FR','ES','IT','NL','BE','AT','PT','FI','GR','AU','SG','JP','HK']);
+
+  // Guess region from navigator.language (e.g., "en-GB" -> "GB")
+  const lang = (navigator.language || 'en-US').toUpperCase();
+  const region = (lang.split('-')[1] || 'US').toUpperCase();
+  const currency = CCY_BY_REGION[region] || 'USD';
+
+  // Render for each .price block
+  const blocks = document.querySelectorAll('.price[data-usd]');
+  blocks.forEach(el => {
+    const usd = Number(el.getAttribute('data-usd') || '0');
+    const rate = USD_TO[currency] || 1;
+    const est = Math.round(usd * rate * 100) / 100;
+
+    const localEl = el.querySelector('.local.est');
+    if (currency !== 'USD') {
+      try {
+        localEl.textContent = `≈ ${new Intl.NumberFormat(undefined, {style:'currency', currency}).format(est)} /mo`;
+      } catch (_) {
+        localEl.textContent = `≈ ${est} ${currency} /mo`;
+      }
+      localEl.classList.remove('hidden');
+    }
+
+    // Show small note when local billing not yet supported
+    const note = el.querySelector('.billing-note');
+    if (currency !== 'USD' && !LOCAL_BILLING_READY.has(region)) {
+      note.classList.remove('hidden'); // "Billing processed in USD"
+    }
+  });
+})();
+</script>
