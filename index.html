@@ -6,16 +6,21 @@
   <title>SpotAlert</title>
   <link rel="stylesheet" href="/styles.css" />
 
-  <!-- OneSignal SDK -->
-  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+  <!-- OneSignal SDK (v16) -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   <script>
-    // fetch public keys (exposes ONLY OneSignal App ID)
-    fetch('/api/public-keys').then(r=>r.json()).then(cfg=>{
-      window.OneSignalDeferred = window.OneSignalDeferred || [];
-      window.OneSignalDeferred.push(function(OneSignal){
-        OneSignal.init({ appId: cfg.oneSignalAppId });
-      });
-    });
+    // Init OneSignal using the App ID from our safe /api/public-keys endpoint
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    fetch('/api/public-keys')
+      .then(r => r.json())
+      .then(cfg => {
+        window.OneSignalDeferred.push(async function (OneSignal) {
+          await OneSignal.init({ appId: cfg.oneSignalAppId });
+          // (Optional) immediately show permission prompt on first visit:
+          // await OneSignal.Notifications.requestPermission();
+        });
+      })
+      .catch(err => console.error('Failed to load public keys:', err));
   </script>
 
   <!-- hls.js for HLS CCTV playback (optional) -->
@@ -88,8 +93,31 @@
 
   <footer class="footer">© 2025 SpotAlert. All rights reserved.</footer>
 
+  <!-- Wire up the Enable Alerts button -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('enableAlertsBtn');
+      if (!btn) return;
+
+      btn.addEventListener('click', async () => {
+        try {
+          // Ask for permission & subscribe
+          const granted = await OneSignal.Notifications.requestPermission();
+          if (!granted) {
+            alert('Please allow notifications to receive SpotAlert alerts.');
+            return;
+          }
+          const userId = await OneSignal.User.getId();
+          console.log('Subscribed. OneSignal User ID:', userId);
+          alert('Alerts enabled! You are subscribed.');
+        } catch (e) {
+          console.error('Enable Alerts error:', e);
+          alert('Could not enable alerts. Check console for details.');
+        }
+      });
+    });
+  </script>
+
   <script src="/app.js"></script>
 </body>
 </html>
-
-
