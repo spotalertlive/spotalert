@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SpotAlert • Dashboard</title>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>
+    .wrap{max-width:1000px;margin:24px auto;padding:0 16px}
+    .row{display:flex;gap:8px;margin:8px 0}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid #eee;padding:8px;text-align:left;font-size:14px}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#eef}
+    .card{background:#fff;border:1px solid #eee;border-radius:12px;padding:16px;margin:16px 0;box-shadow:0 3px 10px rgba(0,0,0,.04)}
+    .h{display:flex;justify-content:space-between;align-items:center}
+    .btn{padding:8px 12px;border:0;border-radius:8px;background:#0b63f6;color:#fff}
+    input,textarea{padding:8px;border:1px solid #ddd;border-radius:8px;width:100%}
+  </style>
+</head>
+<body class="sa-body">
+  <div class="wrap">
+    <div class="h">
+      <h1>SpotAlert Dashboard</h1>
+      <a class="btn" href="/">← Back to site</a>
+    </div>
+
+    <div class="card">
+      <div class="h"><h2>Alerts</h2><span class="pill" id="alertsCount">0</span></div>
+      <table id="alertsTable"><thead><tr>
+        <th>When</th><th>Severity</th><th>Camera</th><th>Title</th><th>Image</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+
+    <div class="card">
+      <div class="h"><h2>Cameras</h2></div>
+      <div class="row">
+        <input id="camName" placeholder="Name (e.g. Gate 1)"/>
+        <input id="camHls"  placeholder="HLS URL (https://.../cam1.m3u8)"/>
+        <button class="btn" id="addCam">Add Camera</button>
+      </div>
+      <table id="camsTable"><thead><tr><th>Name</th><th>HLS</th><th>Added</th></tr></thead><tbody></tbody></table>
+    </div>
+
+    <div class="card">
+      <div class="h"><h2>People / Watchlist</h2></div>
+      <div class="row">
+        <input id="personLabel" placeholder="Label (e.g. John Doe)"/>
+        <button class="btn" id="addPerson">Add</button>
+      </div>
+      <table id="peopleTable"><thead><tr><th>Label</th><th>Added</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <script src="/dashboard.js"></script>
+</body>
+</html>
