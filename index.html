@@ -3,41 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b2040" />link rel="manifest" href="/manifest.json" />
-<meta name="theme-color" content="#0b2040" />
+  <meta name="theme-color" content="#0b2040" />
+  <link rel="manifest" href="/manifest.json" />
 
-<!-- iOS install meta -->
-<link rel="apple-touch-icon" href="/icons/icon-192.png" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /><!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- iOS install meta -->
+  <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
   <title>SpotAlert</title>
   <link rel="stylesheet" href="/styles.css" />
 
-  <!-- OneSignal SDK (v16) -->
+  <!-- OneSignal SDK v16 -->
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   <script>
-    // Init OneSignal using the App ID from our safe /api/public-keys endpoint
+    // Init OneSignal safely from server-exposed public key
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     fetch('/api/public-keys')
       .then(r => r.json())
       .then(cfg => {
         window.OneSignalDeferred.push(async function (OneSignal) {
           await OneSignal.init({ appId: cfg.oneSignalAppId });
-          // (Optional) immediately show permission prompt on first visit:
-          // await OneSignal.Notifications.requestPermission();
         });
       })
       .catch(err => console.error('Failed to load public keys:', err));
   </script>
 
-  <!-- hls.js for HLS CCTV playback (optional) -->
+  <!-- hls.js (optional for CCTV) -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
+
 <body class="sa-body">
+  <!-- Top nav -->
   <header class="sa-nav">
     <a href="/" class="sa-brand">
       <img src="/assets.logo.svg" alt="SpotAlert" height="28" />
@@ -47,13 +44,15 @@
       <a href="#camera">Camera</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
+      <a href="#dashboard">Dashboard</a>
     </nav>
   </header>
 
+  <!-- Hero -->
   <section class="hero">
     <div class="hero-card">
       <h1>Stay aware.<br/>Report fast.</h1>
-      <p>AI‑powered real‑time surveillance &amp; security alerts — anytime, anywhere.</p>
+      <p>AI-powered real-time surveillance & security alerts — anytime, anywhere.</p>
       <div class="hero-actions">
         <button id="openCameraBtn" class="btn-primary">Open Camera Demo</button>
         <button id="enableAlertsBtn" class="btn-secondary">Enable Alerts</button>
@@ -61,18 +60,20 @@
     </div>
   </section>
 
+  <!-- Features -->
   <section id="features" class="section">
     <h2>Our Features (Ready Now)</h2>
     <ul class="bullets">
-      <li>AI‑based real‑time incident detection (browser demo)</li>
-      <li>CCTV &amp; camera system integration (edge‑ready scaffolding)</li>
-      <li>Instant email &amp; web push alerts (SMS optional)</li>
+      <li>AI-based real-time incident detection (browser demo)</li>
+      <li>CCTV & camera system integration (edge-ready scaffolding)</li>
+      <li>Instant email & web push alerts (SMS optional)</li>
       <li>Secure cloud storage for evidence (S3)</li>
       <li>Analytics dashboard for threat patterns (coming module)</li>
     </ul>
     <div class="note-pill">Shira Assistant can triage via email replies.</div>
   </section>
 
+  <!-- Camera demo -->
   <section id="camera" class="section">
     <h2>Live Camera (Demo)</h2>
     <p>This MVP runs 100% in your browser. Nothing is uploaded unless you capture a frame.</p>
@@ -89,6 +90,7 @@
     </div>
   </section>
 
+  <!-- About -->
   <section id="about" class="section">
     <h2>About SpotAlert</h2>
     <p>SpotAlert is your trusted AI security partner, designed to detect, alert, and
@@ -96,138 +98,104 @@
        or public safety, SpotAlert ensures 24/7 monitoring with advanced AI capabilities.</p>
   </section>
 
+  <!-- Contact -->
   <section id="contact" class="section">
     <h2>Contact Us</h2>
     <p>Email support only — Shira can triage and reply.</p>
     <a href="mailto:support@spotalert.live" class="email-pill">support@spotalert.live</a>
   </section>
 
+  <!-- Dashboard (single copy) -->
+  <section id="dashboard" class="section">
+    <header class="header">
+      <h1>🚨 SpotAlert Dashboard</h1>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#alerts">Alerts</a>
+        <a href="#cameras">Cameras</a>
+        <a href="#settings">Settings</a>
+      </nav>
+    </header>
+
+    <main class="dashboard">
+      <!-- Overview -->
+      <section id="overview" class="card">
+        <h2>Overview</h2>
+        <p>Welcome to your SpotAlert dashboard. Monitor alerts, cameras, and system status in real-time.</p>
+        <div class="stats">
+          <div class="stat-box">
+            <h3>Total Alerts</h3>
+            <p id="total-alerts">0</p>
+          </div>
+          <div class="stat-box">
+            <h3>Active Cameras</h3>
+            <p id="active-cameras">0</p>
+          </div>
+          <div class="stat-box">
+            <h3>System Status</h3>
+            <p id="system-status">✅ Online</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Alerts -->
+      <section id="alerts" class="card">
+        <h2>Recent Alerts</h2>
+        <ul id="alert-list"></ul>
+      </section>
+
+      <!-- Cameras -->
+      <section id="cameras" class="card">
+        <h2>Live Cameras</h2>
+        <div id="camera-grid">
+          <p>No cameras connected.</p>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="card">
+        <h2>Settings</h2>
+        <form id="settings-form">
+          <label>
+            Notifications:
+            <input type="checkbox" id="notif-toggle" checked />
+          </label>
+          <label>
+            Refresh Rate (seconds):
+            <input type="number" id="refresh-rate" value="30" />
+          </label>
+          <button type="submit">Save</button>
+        </form>
+      </section>
+    </main>
+  </section>
+
   <footer class="footer">© 2025 SpotAlert. All rights reserved.</footer>
 
-  <!-- Wire up the Enable Alerts button -->
+  <!-- Buttons logic -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const btn = document.getElementById('enableAlertsBtn');
-      if (!btn) return;
-
-      btn.addEventListener('click', async () => {
-        try {
-          // Ask for permission & subscribe
-          const granted = await OneSignal.Notifications.requestPermission();
-          if (!granted) {
-            alert('Please allow notifications to receive SpotAlert alerts.');
-            return;
+      if (btn) {
+        btn.addEventListener('click', async () => {
+          try {
+            const granted = await OneSignal.Notifications.requestPermission();
+            if (!granted) {
+              alert('Please allow notifications to receive SpotAlert alerts.');
+              return;
+            }
+            const userId = await OneSignal.User.getId();
+            console.log('Subscribed. OneSignal User ID:', userId);
+            alert('Alerts enabled! You are subscribed.');
+          } catch (e) {
+            console.error('Enable Alerts error:', e);
+            alert('Could not enable alerts. Check console for details.');
           }
-          const userId = await OneSignal.User.getId();
-          console.log('Subscribed. OneSignal User ID:', userId);
-          alert('Alerts enabled! You are subscribed.');
-        } catch (e) {
-          console.error('Enable Alerts error:', e);
-          alert('Could not enable alerts. Check console for details.');
-        }
-      });
+        });
+      }
     });
   </script>
 
-  <script src="/app.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b2040" />
-
-  <!-- iOS install meta -->
-  <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <title>SpotAlert Dashboard</title>
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="/styles.css" />
-
-  <!-- OneSignal SDK (Push Notifications) -->
-  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
-</head>
-<body>
-  <!-- Header -->
-  <header class="header">
-    <h1>🚨 SpotAlert Dashboard</h1>
-    <nav>
-      <a href="#overview">Overview</a>
-      <a href="#alerts">Alerts</a>
-      <a href="#cameras">Cameras</a>
-      <a href="#settings">Settings</a>
-    </nav>
-  </header>
-
-  <!-- Main Dashboard -->
-  <main class="dashboard">
-
-    <!-- Overview Section -->
-    <section id="overview" class="card">
-      <h2>Overview</h2>
-      <p>Welcome to your SpotAlert dashboard. Monitor alerts, cameras, and system status in real-time.</p>
-      <div class="stats">
-        <div class="stat-box">
-          <h3>Total Alerts</h3>
-          <p id="total-alerts">0</p>
-        </div>
-        <div class="stat-box">
-          <h3>Active Cameras</h3>
-          <p id="active-cameras">0</p>
-        </div>
-        <div class="stat-box">
-          <h3>System Status</h3>
-          <p id="system-status">✅ Online</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Alerts Section -->
-    <section id="alerts" class="card">
-      <h2>Recent Alerts</h2>
-      <ul id="alert-list">
-        <!-- Alerts will be loaded here by app.js -->
-      </ul>
-    </section>
-
-    <!-- Cameras Section -->
-    <section id="cameras" class="card">
-      <h2>Live Cameras</h2>
-      <div id="camera-grid">
-        <!-- Camera feeds go here -->
-        <p>No cameras connected.</p>
-      </div>
-    </section>
-
-    <!-- Settings Section -->
-    <section id="settings" class="card">
-      <h2>Settings</h2>
-      <form id="settings-form">
-        <label>
-          Notifications:
-          <input type="checkbox" id="notif-toggle" checked />
-        </label>
-        <label>
-          Refresh Rate (seconds):
-          <input type="number" id="refresh-rate" value="30" />
-        </label>
-        <button type="submit">Save</button>
-      </form>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>© 2025 SpotAlert. All rights reserved.</p>
-  </footer>
-
-  <!-- Scripts -->
   <script src="/app.js"></script>
 </body>
 </html>
