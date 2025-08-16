@@ -1,0 +1,47 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# auto-cancel previous in-flight runs on the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Lint (if present)
+        run: npm run lint --if-present
+
+      - name: Build (if present)
+        env:
+          # expose whichever your app needs during build
+          NEXT_PUBLIC_ONESIGNAL_APP_ID: ${{ secrets.NEXT_PUBLIC_ONESIGNAL_APP_ID }}
+          VITE_ONESIGNAL_APP_ID:       ${{ secrets.VITE_ONESIGNAL_APP_ID }}
+        run: npm run build --if-present
+
+      - name: Tests (if present)
+        run: npm test --if-present
+
+      # Hit Vercel deploy hook ONLY after successful build on main
+      - name: Trigger Vercel Deploy
+        if: github.ref == 'refs/heads/main' && success()
+        run: curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
