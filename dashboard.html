@@ -1,56 +1,88 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>SpotAlert • Dashboard</title>
-  <link rel="stylesheet" href="/styles.css"/>
-  <style>
-    .wrap{max-width:1000px;margin:24px auto;padding:0 16px}
-    .row{display:flex;gap:8px;margin:8px 0}
-    table{width:100%;border-collapse:collapse}
-    th,td{border-bottom:1px solid #eee;padding:8px;text-align:left;font-size:14px}
-    .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#eef}
-    .card{background:#fff;border:1px solid #eee;border-radius:12px;padding:16px;margin:16px 0;box-shadow:0 3px 10px rgba(0,0,0,.04)}
-    .h{display:flex;justify-content:space-between;align-items:center}
-    .btn{padding:8px 12px;border:0;border-radius:8px;background:#0b63f6;color:#fff}
-    input,textarea{padding:8px;border:1px solid #ddd;border-radius:8px;width:100%}
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b2040" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- iOS install meta -->
+  <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <title>SpotAlert Dashboard</title>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body class="sa-body">
-  <div class="wrap">
-    <div class="h">
-      <h1>SpotAlert Dashboard</h1>
-      <a class="btn" href="/">← Back to site</a>
-    </div>
+  <!-- Simple top nav shared style -->
+  <header class="sa-nav">
+    <a href="/" class="sa-brand">
+      <img src="/assets.logo.svg" alt="SpotAlert" height="28" />
+    </a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/dashboard.html" aria-current="page">Dashboard</a>
+      <a href="/#camera">Camera</a>
+      <a href="/#features">Features</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
 
-    <div class="card">
-      <div class="h"><h2>Alerts</h2><span class="pill" id="alertsCount">0</span></div>
-      <table id="alertsTable"><thead><tr>
-        <th>When</th><th>Severity</th><th>Camera</th><th>Title</th><th>Image</th>
-      </tr></thead><tbody></tbody></table>
-    </div>
-
-    <div class="card">
-      <div class="h"><h2>Cameras</h2></div>
-      <div class="row">
-        <input id="camName" placeholder="Name (e.g. Gate 1)"/>
-        <input id="camHls"  placeholder="HLS URL (https://.../cam1.m3u8)"/>
-        <button class="btn" id="addCam">Add Camera</button>
+  <main class="dashboard">
+    <!-- Overview -->
+    <section id="overview" class="card">
+      <h2>Overview</h2>
+      <p>Welcome to your SpotAlert dashboard. Monitor alerts, cameras, and system status in real-time.</p>
+      <div class="stats">
+        <div class="stat-box">
+          <h3>Total Alerts</h3>
+          <p id="total-alerts">0</p>
+        </div>
+        <div class="stat-box">
+          <h3>Active Cameras</h3>
+          <p id="active-cameras">0</p>
+        </div>
+        <div class="stat-box">
+          <h3>System Status</h3>
+          <p id="system-status">✅ Online</p>
+        </div>
       </div>
-      <table id="camsTable"><thead><tr><th>Name</th><th>HLS</th><th>Added</th></tr></thead><tbody></tbody></table>
-    </div>
+    </section>
 
-    <div class="card">
-      <div class="h"><h2>People / Watchlist</h2></div>
-      <div class="row">
-        <input id="personLabel" placeholder="Label (e.g. John Doe)"/>
-        <button class="btn" id="addPerson">Add</button>
+    <!-- Alerts -->
+    <section id="alerts" class="card">
+      <h2>Recent Alerts</h2>
+      <ul id="alert-list"></ul>
+    </section>
+
+    <!-- Cameras -->
+    <section id="cameras" class="card">
+      <h2>Live Cameras</h2>
+      <div id="camera-grid">
+        <p>No cameras connected.</p>
       </div>
-      <table id="peopleTable"><thead><tr><th>Label</th><th>Added</th></tr></thead><tbody></tbody></table>
-    </div>
-  </div>
+    </section>
 
-  <script src="/dashboard.js"></script>
+    <!-- Settings -->
+    <section id="settings" class="card">
+      <h2>Settings</h2>
+      <form id="settings-form">
+        <label>
+          Notifications:
+          <input type="checkbox" id="notif-toggle" checked />
+        </label>
+        <label>
+          Refresh Rate (seconds):
+          <input type="number" id="refresh-rate" value="30" />
+        </label>
+        <button type="submit">Save</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 SpotAlert. All rights reserved.</footer>
+
+  <script src="/app.js"></script>
 </body>
 </html>
